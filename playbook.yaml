@@ -1,0 +1,41 @@
+---
+###########################
+# Setup Kubernetes Add-Ons
+###########################
+
+- hosts: localhost
+  gather_facts: yes
+  vars:
+    CLUSTER_NAME: "{{ lookup('env','CLUSTER_NAME') }}"
+    S3_BUCKET_NAME: "{{ lookup('env','S3_BUCKET_NAME') }}"
+  roles:
+    - kubectl-config
+
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: Wait for nodes to be ready
+    shell: "kubectl get nodes"
+    register: nodes
+    until:
+      - '" Ready "  in nodes.stdout'
+    retries: 30
+    delay: 3
+
+- hosts: localhost
+  gather_facts: yes
+  vars:
+    CLUSTER_NAME: "{{ lookup('env','CLUSTER_NAME') }}"
+    DNS_ZONE_PUBLIC_ID: "{{ lookup('env','DNS_ZONE_PUBLIC_ID') }}"
+    ZONES: "{{ lookup('env','ZONES') }}"
+    node_autoscaler_min: "{{ lookup('env','NODES_MIN_SIZE') }}"
+    node_autoscaler_max: "{{ lookup('env','NODES_MAX_SIZE') }}"
+    aws_region: "{{ lookup('env','AWS_DEFAULT_REGION') }}"
+  roles:
+    - dashboard
+    - heapster
+    - external-dns
+    - autoscaler
+    - ingress
+    - route53-mapper
+

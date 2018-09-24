@@ -1,0 +1,18 @@
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: 2018-09-23T13:39:45Z
+  labels:
+    kops.k8s.io/cluster: {{.CLUSTER_NAME}}
+  name: master-us-east-1c
+spec:
+  associatePublicIp: false
+  image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
+  machineType: {{.MASTER_US_EAST_1C_TYPE}}
+  maxSize: {{.MASTER_US_EAST_1C_MAX_SIZE}}
+  minSize: {{.MASTER_US_EAST_1C_MIN_SIZE}}
+  nodeLabels:
+    kops.k8s.io/instancegroup: master-us-east-1c
+  role: Master
+  subnets:
+  - us-east-1c

@@ -1,0 +1,19 @@
+---
+
+####################
+# Install Ingress
+####################
+
+# Render templates
+
+- name: Render Ingress template
+  template:
+    src: ingress.yaml.j2
+    dest: /tmp/ingress.yaml
+    mode: 0644
+  become: false
+
+# Deploy ingress and default backend
+
+- name: Deploy ingress and the default backend
+  command: "kubectl apply -f /tmp/ingress.yaml"

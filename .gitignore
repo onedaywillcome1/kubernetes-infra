@@ -1,0 +1,11 @@
+*.idea
+*.iml
+*tfstate*
+inventory
+inventory--
+*.retry
+*/cluster.yaml
+*/nodes.yaml
+*/master-us-east-1a.yaml
+*/master-us-east-1b.yaml
+*/master-us-east-1c.yaml

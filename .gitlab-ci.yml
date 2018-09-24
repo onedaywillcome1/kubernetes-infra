@@ -1,0 +1,56 @@
+image : onedaywillcome/k8-all-in-one:v1.0
+
+stages:
+  - create-infra
+  - update-infra
+  - rolling-update-infra
+  - destroy-infra
+
+create-cluster:
+  stage: create-infra
+  when: manual
+  script:
+    - ./kops.sh create-cluster
+
+execute-ansible:
+  stage: create-infra
+  when: manual
+  script:
+    - ./kops.sh exec-ansible
+
+update-cluster:
+  stage: update-infra
+  when: manual
+  script:
+    - ./kops.sh update-cluster
+
+update-master-nodes:
+  stage: update-infra
+  when: manual
+  script:
+    - ./kops.sh update-master
+
+update-worker-nodes:
+  stage: update-infra
+  when: manual
+  script:
+    - ./kops.sh update-worker
+
+update-ansible:
+  stage: update-infra
+  when: manual
+  script:
+    - ./kops.sh exec-ansible
+
+rolling-update:
+  stage: rolling-update-infra
+  when: manual
+  script:
+    - ./kops.sh rolling-update
+
+delete-cluster:
+  stage: destroy-infra
+  when: manual
+  script:
+    - ./kops.sh delete-cluster
+
