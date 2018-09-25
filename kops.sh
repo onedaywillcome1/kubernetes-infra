@@ -76,10 +76,10 @@ create-cluster)
           echo "`date +'%Y-%m-%d %H:%M:%S'` S3 Bucket ${bucket} exists"
         elif [[ $AWS_DEFAULT_REGION == "us-east-1" ]]; then
           echo "`date +'%Y-%m-%d %H:%M:%S'` Creating s3 Bucket ${bucket}"
-          aws s3api create-bucket --bucket ${bucket} --region ${region}
+          aws s3api create-bucket --bucket ${bucket} --region ${AWS_DEFAULT_REGION}
         else
           echo "`date +'%Y-%m-%d %H:%M:%S'` Creating s3 Bucket ${bucket}"
-          aws s3api create-bucket --bucket ${bucket} --region ${region} --create-bucket-configuration LocationConstraint=${region}
+          aws s3api create-bucket --bucket ${bucket} --region ${AWS_DEFAULT_REGION} --create-bucket-configuration LocationConstraint=${AWS_DEFAULT_REGION}
         fi
 
         kops create cluster \
@@ -122,8 +122,6 @@ update-cluster)
 
         echo "`date +'%Y-%m-%d %H:%M:%S'` Updating cluster ${CLUSTER_NAME}..."
         kops update cluster ${CLUSTER_NAME} --yes --state=s3://${S3_BUCKET_NAME}
-
-#        kops rolling-update cluster ${CLUSTER_NAME} --yes
     else
         echo "`date +'%Y-%m-%d %H:%M:%S'` Cluster ${CLUSTER_NAME} doesn't exists. No need to update"
     fi
