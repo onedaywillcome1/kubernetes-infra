@@ -4,6 +4,7 @@
 
 ## Description
 This project contains kops and ansible commands to create kubernetes infrastructure in an "existing" vpc in an AWS. It also includes a gitlab-ci.yml to build an infrastructure in a pipeline. So, with 1 click, you can spin up or update or destroy your cluster.
+You can find more information about this project from my blog: [here]( https://medium.com/@ahmetatalay/building-kubernetes-infrastructure-with-kops-ansible-gitlab-ci-ae5271c9844c )
 
 ## Prerequisites
 To install kubernetes infrastructure in an AWS, you must have existing VPC. To have a vpc, you can build up with "terraform" or manually in aws console.
