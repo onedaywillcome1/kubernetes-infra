@@ -6,6 +6,9 @@ stages:
   - rolling-update-infra
   - destroy-infra
 
+before_script:
+  - chmod 775 ./kops.sh
+ 
 create-cluster:
   stage: create-infra
   when: manual
